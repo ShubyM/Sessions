@@ -12,12 +12,6 @@ function CreateRoom({ navigation }) {
 
   const onPressCreate = (name, topic) => {
     const uid = firebase.auth().currentUser.uid;
-	// *** code for adding friends based off of user id ***
-	// firebase.firestore().collection('users').doc(uid).collection("friends").add({id : "randomid"})
-	
-	
-	//firebase.auth().currentUser.uid
-	// *** room creation ***
   firebase
     .firestore()
     .collection("rooms")
@@ -27,8 +21,13 @@ function CreateRoom({ navigation }) {
 			topic: topic,
 			createdAt: new Date().getTime(),
 			members: [uid]
+    })
+    .then((docRef) => {
+        firebase.firestore().collection("users").doc(uid)
+        .update({
+        "rooms": firebase.firestore.FieldValue.arrayUnion(docRef.id)
+      })
     });
-
   	navigation.goBack();
   }
 
@@ -43,17 +42,52 @@ function CreateRoom({ navigation }) {
 }
 
 function AllRooms({ navigation }) {
-  // const [rooms, setrooms] = usestate([]);
+  const rooms = []
+  const currentUserId = firebase.auth().currentUser.uid;
+  
+  const getRooms = async () => {
+    try {
+      const docRef = firebase.firestore().collection("users").doc(currentUserId);
+      const doc = await docRef.get();
+      const tRooms = doc.data().rooms;
+      for (let i = 0; i < tRooms; i++) {
+        const query = firebase.firestore().collection("rooms").doc(tRooms[i])
+        const querySnapshot = await query.get().data()
+        console.log(tRooms[i])
+        // rooms.push({
+        //   id: tRooms[i],
+        //   name: querySnapshot.name,
+        //   topic: querySnapshot.topic,
+        // });
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
-  // const getRooms = async () => {
-  //   try {
-  //     const query = firebase.firestore().collection("rooms").orderBy('createdAt', 'desc').limit(20);
-  //     const querSnapshot = await query.where().get();
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-
-  // }
+  const listenForUpdates = () => {
+      const query = firebase.firestore().collection("users").doc(currentUserId);
+      const unsubscribe = query.onSnapshot((querySnapshot) => {
+      const nRooms = querySnapshot.data().rooms
+      for (let i = 0; i < nRooms; i++) {
+        const query = firebase.firestore().collection("rooms").doc(tRooms[i])
+        const roomInfo = query.get().data()
+        console.log(nRooms[i])
+        // rooms.push({
+        //   id: nRooms[i],
+        //   name: roomInfo.name,
+        //   topic: roomInfo.topic,
+        // });
+      }
+      });
+      return unsubscribe
+  }
+  useEffect(() => {
+    for (let i = 0; i < 3; i++) {
+      console.log(rooms[i])
+    }
+    return listenForUpdates();
+  }, [])
 
   return (
     <SafeAreaView>

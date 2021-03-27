@@ -9,7 +9,6 @@ function Home() {
 
     return (
         <SafeAreaView>
-            {/* <FriendDrawer /> */}
             <Text>Home</Text>
         </SafeAreaView>
     )

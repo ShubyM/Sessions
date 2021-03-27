@@ -18,7 +18,7 @@ function SignUp( { navigation } ) {
                 email,
                 username,
                 name,
-                friends: [],
+                rooms: [],
             };
             const usersRef = firebase.firestore().collection('users')
             usersRef.doc(uid).set(data).then(() => {
