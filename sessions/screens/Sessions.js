@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TextInput } from "react-native-gesture-handler";
 
-function CreateChatRoom({ navigation }) {
+function CreateSession({ navigation }) {
   const [name, setName] = useState('')
   const [topic, setTopic] = useState('')
 
@@ -42,7 +42,7 @@ function CreateChatRoom({ navigation }) {
 
 }
 
-function AllRooms({ route }) {
+function AllSessions({ route }) {
   // const [currentUser, setCurrentUser] = useState('0');
   // useEffect(() => {
   //   setCurrentUser(route.params.uid)
@@ -58,15 +58,15 @@ function AllRooms({ route }) {
 
 const Stack = createStackNavigator();
 
-function Chats(props) {
+function Sessions(props) {
   return (
     <NavigationContainer independent="true">
       <Stack.Navigator>
-        <Stack.Screen name="Rooms" component={AllRooms} />
-        <Stack.Screen name="Create Room" component={CreateChatRoom}/>
+        <Stack.Screen name="Rooms" component={AllSessions} />
+        <Stack.Screen name="Create Room" component={CreateSession}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
-export default Chats;
+export default Sessions;

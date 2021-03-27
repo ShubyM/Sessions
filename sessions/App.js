@@ -7,7 +7,7 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import Home from "./screens/Home";
 import SignIn from "./screens/SignIn";
 import SignUp from "./screens/SignUp";
-import Chats from "./screens/Chatrooms";
+import Sessions from "./screens/Sessions";
 import Profile from "./screens/Profile";
 import { StyleSheet, Text, View } from 'react-native';
 import {firebase} from "./config"
@@ -89,7 +89,7 @@ function Tabs( props, { navigation } ) {
                 focused ? (<MaterialIcons name='home' size={40} color='#58CCE5' />)
                 : (<MaterialIcons name='home' size={30} color='black' />),
             }} />
-      <Tab.Screen name="Chats" children={() => <Chats id={props.data.id} name={props.data.name} username={props.data.username}/>} options={{tabBarIcon: ({focused}) =>
+      <Tab.Screen name="Sessions" children={() => <Sessions id={props.data.id} name={props.data.name} username={props.data.username}/>} options={{tabBarIcon: ({focused}) =>
                 focused ? (<MaterialIcons name='chat' size={40} color='#58CCE5' />)
                 : (<MaterialIcons name='chat' size={30} color='black' />),
             }} />
