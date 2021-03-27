@@ -36,11 +36,7 @@ function Friends() {
             .collection("users")
             .doc(currentUserId)
             .update({
-              "friends": firebase.firestore.FieldValue.arrayUnion({
-              id: newFriend.id,
-              name: newFriend.name,
-              username: newFriend.username,
-            })
+              "friends": firebase.firestore.FieldValue.arrayUnion(friend)
             })
             friends.push(friend)
           }
@@ -52,7 +48,6 @@ function Friends() {
   const getFriends = async () => {
     const query = await firebase.firestore().collection("users").doc(currentUserId).get()
     .then((doc) => {
-      console.log(doc.data().friends)
       friends.push(doc.data().friends)
     })
   }
