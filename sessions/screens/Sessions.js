@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TextInput } from "react-native-gesture-handler";
 
-function CreateSession({ navigation }) {
+function CreateRoom({ navigation }) {
   const [name, setName] = useState('')
   const [topic, setTopic] = useState('')
 
@@ -42,12 +42,12 @@ function CreateSession({ navigation }) {
 
 }
 
-function AllSessions({ route }) {
-  // const [currentUser, setCurrentUser] = useState('0');
-  // useEffect(() => {
-  //   setCurrentUser(route.params.uid)
-  // }, [])
-  // const [rooms, setrooms] = usestate([]);
+function AllRooms({ navigation }) {
+  const [rooms, setrooms] = usestate([]);
+
+  const getRooms = async () => {
+
+  }
 
   return (
     <SafeAreaView>
@@ -62,8 +62,8 @@ function Sessions(props) {
   return (
     <NavigationContainer independent="true">
       <Stack.Navigator>
-        <Stack.Screen name="Rooms" component={AllSessions} />
-        <Stack.Screen name="Create Room" component={CreateSession}/>
+        <Stack.Screen name="Rooms" component={AllRooms} />
+        <Stack.Screen name="Create Room" component={CreateRoom}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
