@@ -43,11 +43,17 @@ function CreateRoom({ navigation }) {
 }
 
 function AllRooms({ navigation }) {
-  const [rooms, setrooms] = usestate([]);
+  // const [rooms, setrooms] = usestate([]);
 
-  const getRooms = async () => {
+  // const getRooms = async () => {
+  //   try {
+  //     const query = firebase.firestore().collection("rooms").orderBy('createdAt', 'desc').limit(20);
+  //     const querSnapshot = await query.where().get();
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
 
-  }
+  // }
 
   return (
     <SafeAreaView>
