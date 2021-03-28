@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, StyleSheet, Text, View, Button } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View, Button, FlatList } from "react-native";
 import { firebase } from "../config.js";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TextInput } from "react-native-gesture-handler";
+
+import Room from '../components/room'
 
 function CreateRoom({ navigation }) {
   const [name, setName] = useState('')
@@ -41,57 +43,44 @@ function CreateRoom({ navigation }) {
 
 }
 
+
 function AllRooms({ navigation }) {
-  const rooms = []
+  const [rooms, setRooms] = useState([])
   const currentUserId = firebase.auth().currentUser.uid;
-  
-  const getRooms = async () => {
-    try {
-      const docRef = firebase.firestore().collection("users").doc(currentUserId);
-      const doc = await docRef.get();
-      const tRooms = doc.data().rooms;
-      for (let i = 0; i < tRooms; i++) {
-        const query = firebase.firestore().collection("rooms").doc(tRooms[i])
-        const querySnapshot = await query.get().data()
-        console.log(tRooms[i])
-        // rooms.push({
-        //   id: tRooms[i],
-        //   name: querySnapshot.name,
-        //   topic: querySnapshot.topic,
-        // });
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   const listenForUpdates = () => {
       const query = firebase.firestore().collection("users").doc(currentUserId);
       const unsubscribe = query.onSnapshot((querySnapshot) => {
       const nRooms = querySnapshot.data().rooms
-      for (let i = 0; i < nRooms; i++) {
-        const query = firebase.firestore().collection("rooms").doc(tRooms[i])
-        const roomInfo = query.get().data()
-        console.log(nRooms[i])
-        // rooms.push({
-        //   id: nRooms[i],
-        //   name: roomInfo.name,
-        //   topic: roomInfo.topic,
-        // });
+      const t = rooms
+      for (let i = 0; i < nRooms.length; i++) {
+        const query = firebase.firestore().collection("rooms").doc(nRooms[i])
+        const roomInfo = query.get().then((rI) => {
+          t.push({
+            id: nRooms[i],
+            name: rI.data().name,
+            topic: rI.data().topic,
+          });
+        })
       }
+      setRooms(t);
       });
-      return unsubscribe
   }
+
   useEffect(() => {
-    for (let i = 0; i < 3; i++) {
-      console.log(rooms[i])
-    }
-    return listenForUpdates();
+    listenForUpdates();
   }, [])
 
   return (
     <SafeAreaView>
       <Button onPress={() => navigation.navigate('Create Room')} title="create room" />
+      <FlatList 
+        data={rooms}
+        renderItem={({ item }) => {
+          return <Room id={item.id} name={item.name} topic={item.topic}/>
+        }}
+        keyExtractor={item => item.id.toString()}
+      />
     </SafeAreaView>
   )
 }

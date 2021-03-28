@@ -53,14 +53,14 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      {/* <Stack.Navigator>
         <Stack.Screen name="Sign In" component={SignIn}/>
         <Stack.Screen name="Sign Up" component={SignUp}/>
         <Stack.Screen name="Tabs">
           {props => <Tabs {...props} data={user}/>}
         </Stack.Screen>
-      </Stack.Navigator>
-      {/* <Stack.Navigator>
+      </Stack.Navigator> */}
+      <Stack.Navigator>
         { user ? (
           <>
             <Stack.Screen name="Home">
@@ -73,7 +73,7 @@ export default function App() {
             <Stack.Screen name="Sign Up" component={SignUp}/>
           </>
         )}
-      </Stack.Navigator> */}
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
@@ -97,10 +97,10 @@ function Tabs( props, { navigation } ) {
                 focused ? (<FontAwesome5 name='user-circle' size={37} color='#58CCE5' />)
                 : (<FontAwesome5 name='user-circle' size={27} color='black' />),
             }} />
-      <Tab.Screen name="Friends" component={Friends} options={{tabBarIcon: ({focused}) =>
+      {/* <Tab.Screen name="Friends" component={Friends} options={{tabBarIcon: ({focused}) =>
                 focused ? (<FontAwesome5 name='user-plus' size={30} color='#58CCE5' />)
                 : (<FontAwesome5 name='user-plus' size={20} color='black' />),
-            }} />
+            }} /> */}
     </Tab.Navigator>
   )
 }

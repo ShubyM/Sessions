@@ -15,8 +15,10 @@ import { firebase } from "../config.js";
 function Room(props) {
     return (
         <View>
-            <Text>props.name</Text>
-            <Text>props.topic</Text>
+            <Text>Room</Text>
+            <Text>id: {props.id}</Text>
+            <Text>name: {props.name}</Text>
+            <Text>topic: {props.topic}</Text>
         </View>
     )
 }

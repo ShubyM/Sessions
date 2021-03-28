@@ -4,8 +4,8 @@ import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 function Profile(props) {
     return (
         <SafeAreaView>
-            <Text>{props.name}</Text>
-            <Text>{props.username}</Text>
+            <Text>Name: {props.name}</Text>
+            <Text>Username: {props.username}</Text>
         </SafeAreaView>
     )
 }
