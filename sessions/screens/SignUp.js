@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import {firebase} from "../config"
+import globalStyles from '../styles/global';
 
 function SignUp( { navigation } ) {
     const [email, setEmail] = useState('')
@@ -34,13 +35,15 @@ function SignUp( { navigation } ) {
     }
 
     return (
-        <SafeAreaView>
-            <Text>Sign Up</Text>
-            <TextInput placeholder='Email' onChangeText={(text) => setEmail(text)} value={email} autoCapitalize="none"/>
-            <TextInput placeholder='Name' onChangeText={(text) => setName(text)} value={name} autoCapitalize="none"/>
-            <TextInput placeholder='Username' onChangeText={(text) => setUsername(text)} value={username} autoCapitalize="none"/>
-            <TextInput placeholder='Password' onChangeText={(text) => setPassword(text)} value={password} autoCapitalize="none"/>
-            <Button title="Sign Up" onPress={() =>onSignUp()}/>
+        <SafeAreaView style={globalStyles.container}>
+            <Text style={globalStyles.titleText}>Sign Up</Text>
+            <TextInput placeholder='Email' onChangeText={(text) => setEmail(text)} value={email} autoCapitalize="none" style={globalStyles.input}/>
+            <TextInput placeholder='Name' onChangeText={(text) => setName(text)} value={name} autoCapitalize="none" style={globalStyles.input}/>
+            <TextInput placeholder='Username' onChangeText={(text) => setUsername(text)} value={username} autoCapitalize="none" style={globalStyles.input}/>
+            <TextInput placeholder='Password' onChangeText={(text) => setPassword(text)} value={password} autoCapitalize="none" style={globalStyles.input}/>
+            <TouchableOpacity onPress={() =>onSignUp()} style={globalStyles.buttonStyle}>
+                <Text>Sign up</Text>
+            </TouchableOpacity>
         </SafeAreaView>
     )
 }
